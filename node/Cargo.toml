@@ -1,107 +1,134 @@
 [package]
-name = "solochain-template-node"
-description = "A solochain node template built with Substrate, part of Polkadot Sdk. (polkadot v1.15.0)"
-version = "0.1.0"
-license = "Unlicense"
-authors.workspace = true
-homepage.workspace = true
-repository.workspace = true
-edition.workspace = true
-publish = false
+name                    = "solochain-template-node"
+description             = "An EVM/Ethereum compatible solochain node"
+version                 = "0.1.0"
+license                 = "Unlicense"
+authors.workspace       = true
+homepage.workspace      = true
+repository.workspace    = true
+edition.workspace       = true
+publish                 = false
 
-build = "build.rs"
+build                   = "build.rs"
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-clap = { features = ["derive"], workspace = true }
-futures = { features = ["thread-pool"], workspace = true }
-serde_json = { workspace = true, default-features = true }
-jsonrpsee = { features = ["server"], workspace = true }
-sc-cli.workspace = true
-sc-cli.default-features = true
-sp-core.workspace = true
-sp-core.default-features = true
-sc-executor.workspace = true
-sc-executor.default-features = true
-sc-network.workspace = true
-sc-network.default-features = true
-sc-service.workspace = true
-sc-service.default-features = true
-sc-telemetry.workspace = true
-sc-telemetry.default-features = true
-sc-transaction-pool.workspace = true
-sc-transaction-pool.default-features = true
-sc-transaction-pool-api.workspace = true
-sc-transaction-pool-api.default-features = true
-sc-offchain.workspace = true
-sc-offchain.default-features = true
-sc-consensus-aura.workspace = true
-sc-consensus-aura.default-features = true
-sp-consensus-aura.workspace = true
-sp-consensus-aura.default-features = true
-sc-consensus.workspace = true
-sc-consensus.default-features = true
-sc-consensus-grandpa.workspace = true
-sc-consensus-grandpa.default-features = true
-sp-consensus-grandpa.workspace = true
-sp-consensus-grandpa.default-features = true
-sc-client-api.workspace = true
-sc-client-api.default-features = true
-sc-rpc-api.workspace = true
-sc-rpc-api.default-features = true
-sc-basic-authorship.workspace = true
-sc-basic-authorship.default-features = true
-sp-runtime.workspace = true
-sp-runtime.default-features = true
-sp-io.workspace = true
-sp-io.default-features = true
-sp-timestamp.workspace = true
-sp-timestamp.default-features = true
-sp-inherents.workspace = true
-sp-inherents.default-features = true
-sp-keyring.workspace = true
-sp-keyring.default-features = true
-sp-api.workspace = true
-sp-api.default-features = true
-sp-blockchain.workspace = true
-sp-blockchain.default-features = true
-sp-block-builder.workspace = true
-sp-block-builder.default-features = true
-frame-system.workspace = true
-frame-system.default-features = true
-pallet-transaction-payment.workspace = true
-pallet-transaction-payment-rpc.workspace = true
-pallet-transaction-payment-rpc.default-features = true
-substrate-frame-rpc-system.workspace = true
-substrate-frame-rpc-system.default-features = true
-frame-benchmarking-cli.workspace = true
-frame-benchmarking-cli.default-features = true
-solochain-template-runtime.workspace = true
+clap                            = { workspace = true, features = ["derive"] }
+futures                         = { workspace = true, features = ["thread-pool"] }
+serde_json                      = { workspace = true, default-features = true }
+jsonrpsee                       = { workspace = true, features = ["server"] }
+solochain-template-runtime      = { workspace = true, default-features = true }
+log                             = { workspace = true }
+async-trait                     = { workspace = true }
+codec                           = { workspace = true }
+hex-literal                     = { workspace = true }
+# Substrate
+prometheus-endpoint             = { workspace = true, package = "substrate-prometheus-endpoint" }
+# SC
+sc-basic-authorship             = { workspace = true }
+sc-cli                          = { workspace = true }
+sc-client-api                   = { workspace = true }
+sc-consensus                    = { workspace = true }
+sc-consensus-aura               = { workspace = true }
+sc-consensus-grandpa            = { workspace = true }
+sc-consensus-manual-seal        = { workspace = true }
+sc-executor                     = { workspace = true }
+sc-network                      = { workspace = true }
+sc-network-sync                 = { workspace = true }
+sc-offchain                     = { workspace = true }
+sc-rpc                          = { workspace = true }
+sc-rpc-api                      = { workspace = true }
+sc-service                      = { workspace = true }
+sc-telemetry                    = { workspace = true }
+sc-transaction-pool             = { workspace = true }
+sc-transaction-pool-api         = { workspace = true }
+# SP
+sp-api                          = { workspace = true, features = ["default"] }
+sp-block-builder                = { workspace = true }
+sp-blockchain                   = { workspace = true }
+sp-consensus-aura               = { workspace = true, features = ["default"] }
+sp-consensus-grandpa            = { workspace = true, features = ["default"] }
+sp-core                         = { workspace = true, features = ["default"] }
+sp-inherents                    = { workspace = true, features = ["default"] }
+sp-io                           = { workspace = true, features = ["default"] }
+sp-offchain                     = { workspace = true, features = ["default"] }
+sp-runtime                      = { workspace = true, features = ["default"] }
+sp-session                      = { workspace = true, features = ["default"] }
+sp-timestamp                    = { workspace = true, features = ["default"] }
+sp-transaction-pool             = { workspace = true, features = ["default"] }
+sp-keyring                      = { workspace = true, default-features = true }
+# These dependencies are used for RPC
+frame-system-rpc-runtime-api    = { workspace = true }
+pallet-transaction-payment-rpc  = { workspace = true }
+pallet-transaction-payment-rpc-runtime-api = { workspace = true }
+substrate-frame-rpc-system      = { workspace = true }
+# These dependencies are used for runtime benchmarking
+frame-benchmarking              = { workspace = true, optional = true }
+frame-benchmarking-cli          = { workspace = true }
+frame-system                    = { workspace = true }
+pallet-transaction-payment      = { workspace = true }
+# FC
+fc-api                          = { workspace = true }
+fc-cli                          = { workspace = true }
+fc-consensus                    = { workspace = true }
+fc-db                           = { workspace = true }
+fc-mapping-sync                 = { workspace = true }
+fc-rpc                          = { workspace = true }
+fc-rpc-core                     = { workspace = true }
+fc-storage                      = { workspace = true }
+# FP
+fp-account                      = { workspace = true }
+fp-dynamic-fee                  = { workspace = true, features = ["default"] }
+fp-evm                          = { workspace = true, features = ["default"] }
+fp-rpc                          = { workspace = true, features = ["default"] }
 
 [build-dependencies]
-substrate-build-script-utils.workspace = true
-substrate-build-script-utils.default-features = true
+substrate-build-script-utils    = { workspace = true, default-features = true }
 
 [features]
-default = ["std"]
+default = [
+    "std",
+    "rocksdb",
+    "sql",
+    "txpool",
+    "rpc-binary-search-estimate",
+]
 std = [
-	"solochain-template-runtime/std",
+    "solochain-template-runtime/std",
+]
+rocksdb = [
+    "sc-cli/rocksdb",
+    "sc-service/rocksdb",
+    "fc-cli/rocksdb",
+    "fc-db/rocksdb",
+    "fc-mapping-sync/rocksdb",
+    "fc-rpc/rocksdb",
+]
+sql = [
+    "fc-db/sql",
+    "fc-mapping-sync/sql",
+]
+txpool = [
+    "fc-rpc/txpool"
+]
+rpc-binary-search-estimate = [
+    "fc-rpc/rpc-binary-search-estimate"
 ]
 # Dependencies that are only required if runtime benchmarking should be build.
 runtime-benchmarks = [
-	"frame-benchmarking-cli/runtime-benchmarks",
-	"frame-system/runtime-benchmarks",
-	"sc-service/runtime-benchmarks",
-	"solochain-template-runtime/runtime-benchmarks",
-	"sp-runtime/runtime-benchmarks",
+    "frame-benchmarking-cli/runtime-benchmarks",
+    "frame-system/runtime-benchmarks",
+    "sc-service/runtime-benchmarks",
+    "solochain-template-runtime/runtime-benchmarks",
+    "sp-runtime/runtime-benchmarks",
 ]
 # Enable features that allow the runtime to be tried and debugged. Name might be subject to change
 # in the near future.
 try-runtime = [
-	"frame-system/try-runtime",
-	"pallet-transaction-payment/try-runtime",
-	"solochain-template-runtime/try-runtime",
-	"sp-runtime/try-runtime",
+    "frame-system/try-runtime",
+    "pallet-transaction-payment/try-runtime",
+    "solochain-template-runtime/try-runtime",
+    "sp-runtime/try-runtime",
 ]

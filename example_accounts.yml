@@ -1,0 +1,36 @@
+Network_ID: substrate
+Accounts:
+  - Account1:
+    Password      : 123456
+    Secret_seed   : 0x7e5c647f409ceb13d6330a93efc2b4f2fef860ec47c5d6a2fad5f30c497aff06
+    Secret_phrase : maze bid adult foster recall guess off engine sphere need lava grit
+    Keys: 
+      # Use for Aura (generating blocks)
+      Sr2551:
+        Public_key_hex  : 0xc8d74d977047bbb9f02bfd4f0edd31231aae51e88ad415b96dcfbbb096d7a77a
+        Account_ID      : 0xc8d74d977047bbb9f02bfd4f0edd31231aae51e88ad415b96dcfbbb096d7a77a
+        Public_key_SS58 : 5Gc3PiZ3LVkfnPhiruPj2wtKE4GVQM7H6fjLkNKRuamC7irV
+        # This address
+        SS58_Address    : 5Gc3PiZ3LVkfnPhiruPj2wtKE4GVQM7H6fjLkNKRuamC7irV
+      # Use for Grandpa (finalizing blocks)
+      Ed25519:
+        Public_key_hex  : 0x52abccf85a1f870ef634a5384baf4e10fcb44879d31d1702a51acae32d6da298
+        Account_ID      : 0x52abccf85a1f870ef634a5384baf4e10fcb44879d31d1702a51acae32d6da298
+        Public_key_SS58 : 5Dw6pTvKoso3BkbtfVqamMZSzg9GpmpxdEAX19B6syXcmijP
+        # This address
+        SS58_Address    : 5Dw6pTvKoso3BkbtfVqamMZSzg9GpmpxdEAX19B6syXcmijP
+  - Account2:
+    Password      : 44444
+    Secret_seed   : 0xc5af9493a8bc208624b068c920684c5cbaf6654e43fdbab93d7db03ccdf0bb22
+    Secret_phrase : enemy emerge width oyster wrap mad honey extra peace ritual entry man
+    Keys: 
+      Sr2551:
+        Public_key_hex  : 0x0e401591fedfe1640f54f28bf17319c3a1879f59b583986cdc72ea4307e45e29
+        Account_ID      : 0x0e401591fedfe1640f54f28bf17319c3a1879f59b583986cdc72ea4307e45e29
+        Public_key_SS58 : 5CPPZhPfMQkAGt2KPqUbCvMdgCtif3SdkWCUamFB78115bRw
+        SS58_Address    : 5CPPZhPfMQkAGt2KPqUbCvMdgCtif3SdkWCUamFB78115bRw 
+      Ed25519:
+        Public_key_hex  : 0xfeeb2d2a4d1dc634963ce164a74fd1467b464933f0d130a46e0ddb22014c3bd3
+        Account_ID      : 0xfeeb2d2a4d1dc634963ce164a74fd1467b464933f0d130a46e0ddb22014c3bd3
+        Public_key_SS58 : 5Hpwt6rRzLQtvAy9XppD6iEzQs18EY7vAFCqPYdEAEeRGFvx
+        SS58_Address    : 5Hpwt6rRzLQtvAy9XppD6iEzQs18EY7vAFCqPYdEAEeRGFvx

@@ -11,9 +11,12 @@
     {
       devShells.default = pkgs.mkShell {
         packages = with pkgs; [
-          rustup
+          # rustup
           clang
           protobuf
+          zlib
+          pkg-config
+          openssl.dev
         ];
 
         LIBCLANG_PATH = "${pkgs.libclang.lib}/lib";

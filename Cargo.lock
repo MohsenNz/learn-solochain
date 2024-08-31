@@ -4996,6 +4996,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "pallet-claim"
+version = "0.1.0"
+dependencies = [
+ "parity-scale-codec",
+ "polkadot-sdk-frame",
+ "scale-info",
+]
+
+[[package]]
 name = "pallet-grandpa"
 version = "37.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5413,6 +5422,39 @@ name = "pkg-config"
 version = "0.3.30"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d231b230927b5e4ad203db57bbcbee2802f6bce620b1e4a9024a07d94e2907ec"
+
+[[package]]
+name = "polkadot-sdk-frame"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a75d3997a6eb7c986fe54579f58978837707e1fcb2aca38d26f72e0794620c91"
+dependencies = [
+ "docify",
+ "frame-benchmarking",
+ "frame-executive",
+ "frame-support",
+ "frame-system",
+ "frame-system-benchmarking",
+ "frame-system-rpc-runtime-api",
+ "frame-try-runtime",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "sp-api",
+ "sp-arithmetic",
+ "sp-block-builder",
+ "sp-consensus-aura",
+ "sp-consensus-grandpa",
+ "sp-core",
+ "sp-inherents",
+ "sp-io",
+ "sp-offchain",
+ "sp-runtime",
+ "sp-session",
+ "sp-storage",
+ "sp-transaction-pool",
+ "sp-version",
+]
 
 [[package]]
 name = "polkavm"
@@ -8032,6 +8074,7 @@ dependencies = [
  "frame-try-runtime",
  "pallet-aura",
  "pallet-balances",
+ "pallet-claim",
  "pallet-grandpa",
  "pallet-sudo",
  "pallet-template",
