@@ -1,5 +1,0 @@
-- Run Blockchain network *
-- Add EVM module
-    - EVM integration
-    - EVM account
-- Support Meta-mask
