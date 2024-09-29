@@ -1,27 +1,30 @@
-# Substrate Node Template
+# EVM compatible Solochain
 
-A fresh [Substrate](https://substrate.io/) node, ready for hacking :rocket:
-
-A standalone version of this template is available for each release of Polkadot
-in the [Substrate Developer Hub Parachain
-Template](https://github.com/substrate-developer-hub/substrate-node-template/)
-repository. The parachain template is generated directly at each Polkadot
-release branch from the [Solochain Template in
-Substrate](https://github.com/paritytech/polkadot-sdk/tree/master/templates/solochain)
-upstream
-
-It is usually best to use the stand-alone version to start a new project. All
-bugs, suggestions, and feature requests should be made upstream in the
-[Substrate](https://github.com/paritytech/polkadot-sdk/tree/master/substrate)
-repository.
+Base of the [Frontier](https://github.com/polkadot-evm/frontier)
 
 ## Getting Started
 
-Depending on your operating system and Rust version, there might be additional
-packages required to compile this template. Check the
-[Install](https://docs.substrate.io/install/) instructions for your platform for
-the most common dependencies. Alternatively, you can use one of the [alternative
-installation](#alternatives-installations) options.
+Supported OS:
+
+- Linux
+- MacOS
+- WSL2 on Windows
+
+Install Rust:
+- Method 1: through [rust installation doc](https://www.rust-lang.org/tools/install)
+- Method 2: uncomment `rustup` in `flake.nix` file
+    
+Install Nix:
+
+```sh
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+```
+
+Then enter to development environment from the root of the project folder (where flake.nix exist):
+
+```sh
+nix develop
+```
 
 ### Build
 
@@ -29,6 +32,12 @@ Use the following command to build the node without launching it:
 
 ```sh
 cargo build --package solochain-template-node --release
+```
+
+Or just:
+
+```sh
+cargo build --release
 ```
 
 ### Embedded Docs
@@ -45,7 +54,7 @@ Docs](https://doc.rust-lang.org/cargo/commands/cargo-doc.html) for this template
 with this command:
 
 ```sh
-cargo +nightly doc --open
+cargo doc --open
 ```
 
 ### Single-Node Development Chain
@@ -72,7 +81,7 @@ RUST_BACKTRACE=1 ./target/release/solochain-template-node -ldebug --dev
 Development chains:
 
 - Maintain state in a `tmp` folder while the node is running.
-- Use the **Alice** and **Bob** accounts as default validator authorities.
+- Use the **Alice** and **Bob** (**Bob** is just in test-net, not dev-net) accounts as default validator authorities.
 - Use the **Alice** account as the default `sudo` account.
 - Are preconfigured with a genesis state (`/node/src/chain_spec.rs`) that
   includes several pre-funded development accounts.
@@ -97,6 +106,33 @@ $ ls ./my-chain-state/chains/dev
 db keystore network
 ```
 
+### Pre-defined accounts
+ 
+Pre-founded with native token
+
+```yaml
+Alice       : 0x1f31d7740f9b822edd0ea965f4cfcf1034c450a2
+Bob         : 0x8347187707fea1e2418c8534998d9b8d26cd6430
+AliceStash  : 0x81593023a7f69346a047421099a8085ed0f44f7e
+BobStash    : 0xe1cb409bc4e2002e12875a1b0c528994fe3ef23e
+```
+
+Pre-founded with ETH
+
+```yaml
+account1:
+    pubkey:
+        0xAE4F6dFcdB369A6C43565b1658Ac759960a60aCb
+    privkey:
+        0x1650222a42e77da936f8c183458814cd144e7648d683b0ab7321bd2032030c08
+account2:
+    pubkey:
+        0x4dE6268744b93Ed85b4e2CF683686f4A6086293a
+    privkey:
+        0x096e09370e3b22537c854ffc517514ad7f31639b377488a252868b4276d35826
+```
+
+
 ### Connect with Polkadot-JS Apps Front-End
 
 After you start the node template locally, you can interact with it using the
@@ -111,11 +147,6 @@ also find the source code and instructions for hosting your own instance in the
 
 If you want to see the multi-node consensus algorithm in action, see [Simulate a
 network](https://docs.substrate.io/tutorials/build-a-blockchain/simulate-network/).
-
-## Template Structure
-
-A Substrate project such as this consists of a number of components that are
-spread across a few directories.
 
 ### Node
 
@@ -204,21 +235,3 @@ A FRAME pallet is comprised of a number of blockchain primitives, including:
 
 Each pallet has its own `Config` trait which serves as a configuration interface
 to generically define the types and parameters it depends on.
-
-## Alternatives Installations
-
-Instead of installing dependencies and building this source directly, consider
-the following alternatives.
-
-### Nix
-
-Install [nix](https://nixos.org/) and
-[nix-direnv](https://github.com/nix-community/nix-direnv) for a fully
-plug-and-play experience for setting up the development environment. To get all
-the correct dependencies, activate direnv `direnv allow`.
-
-### Docker
-
-Please follow the [Substrate Docker instructions
-here](https://github.com/paritytech/polkadot-sdk/blob/master/substrate/docker/README.md) to
-build the Docker container with the Substrate Node Template binary.
