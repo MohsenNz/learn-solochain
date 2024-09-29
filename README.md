@@ -1,6 +1,6 @@
 # EVM compatible Solochain
 
-Base of the [Frontier](https://github.com/polkadot-evm/frontier)
+Base on [Frontier](https://github.com/polkadot-evm/frontier)
 
 ## Getting Started
 
@@ -64,12 +64,6 @@ persist state:
 
 ```sh
 ./target/release/solochain-template-node --dev
-```
-
-To purge the development chain's state, run the following command:
-
-```sh
-./target/release/solochain-template-node purge-chain --dev
 ```
 
 To start the development chain with detailed logging, run the following command:
