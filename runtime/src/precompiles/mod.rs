@@ -1,3 +1,5 @@
+mod hello_precompile;
+
 use core::marker::PhantomData;
 use pallet_evm::{
     IsPrecompileResult, Precompile, PrecompileHandle, PrecompileResult, PrecompileSet,
@@ -8,6 +10,9 @@ use pallet_evm_precompile_modexp::Modexp;
 use pallet_evm_precompile_sha3fips::Sha3FIPS256;
 use pallet_evm_precompile_simple::{ECRecover, ECRecoverPublicKey, Identity, Ripemd160, Sha256};
 
+use self::hello_precompile::HelloPrecompile;
+
+// TODO: rename
 pub struct FrontierPrecompiles<R>(PhantomData<R>);
 
 impl<R> FrontierPrecompiles<R>
@@ -17,7 +22,7 @@ where
     pub fn new() -> Self {
         Self(Default::default())
     }
-    pub fn used_addresses() -> [H160; 7] {
+    pub fn used_addresses() -> [H160; 8] {
         [
             hash(1),
             hash(2),
@@ -26,6 +31,7 @@ where
             hash(5),
             hash(1024),
             hash(1025),
+            hash(1026),
         ]
     }
 }
@@ -44,6 +50,7 @@ where
             // Non-Frontier specific nor Ethereum precompiles :
             a if a == hash(1024) => Some(Sha3FIPS256::execute(handle)),
             a if a == hash(1025) => Some(ECRecoverPublicKey::execute(handle)),
+            a if a == hash(1026) => Some(HelloPrecompile::execute(handle)),
             _ => None,
         }
     }

@@ -9,7 +9,6 @@ use sc_cli::Result;
 use sc_client_api::BlockBackend;
 use sp_core::{ecdsa, Encode, Pair};
 use sp_inherents::{InherentData, InherentDataProvider};
-use sp_keyring::AccountKeyring;
 use sp_runtime::{generic::Era, OpaqueExtrinsic, SaturatedConversion};
 // Frontier
 use fp_account::AccountId20;

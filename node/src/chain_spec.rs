@@ -76,7 +76,6 @@ pub fn local_testnet_config() -> ChainSpec {
                 // FerdieStash.account_id20(),
             ],
             // Initial PoA authorities
-            // vec![authority_keys_of(Alice), authority_keys_of(Bob)],
             vec![Alice.authority_keys(), Bob.authority_keys()],
             42,
             false,

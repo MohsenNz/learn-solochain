@@ -126,6 +126,14 @@ account2:
         0x096e09370e3b22537c854ffc517514ad7f31639b377488a252868b4276d35826
 ```
 
+### POA authority accounts
+
+|           |Aura Id                                         |Grandpa Id                                      |
+|-----------|------------------------------------------------|------------------------------------------------|
+|Alice      |5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY|5FA9nQDVg267DEd8m1ZypXLBnvN7SFxYwV7ndqSYGiN9TTpu|
+|Bob        |5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty|5GoNkf6WdbxCFnPdAnYYQyCjAKPJgLNxXwPjwTh6DGg6gN3E|
+
+They are integrated with `--alice` and `--bob` switches for testing purpose.
 
 ### Connect with Polkadot-JS Apps Front-End
 

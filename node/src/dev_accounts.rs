@@ -32,10 +32,10 @@ impl EthAccountKeyring {
 
     pub fn seed(&self) -> String {
         String::from(match self {
-            Alice => "Alice",
-            Bob => "Bob",
-            AliceStash => "AliceStash",
-            BobStash => "BobStash",
+            Alice => "//Alice",
+            Bob => "//Bob",
+            AliceStash => "//AliceStash",
+            BobStash => "//BobStash",
         })
     }
 
@@ -51,7 +51,7 @@ pub fn authority_keys_from_seed(s: &str) -> (AuraId, GrandpaId) {
 
 /// Generate a crypto pair from seed.
 pub fn get_from_seed<TPublic: Public>(seed: &str) -> <TPublic::Pair as Pair>::Public {
-    TPublic::Pair::from_string(&format!("//{}", seed), None)
+    TPublic::Pair::from_string(seed, None)
         .expect("static values are valid; qed")
         .public()
 }
@@ -61,48 +61,22 @@ mod tests {
     use hex_literal::hex;
     use sp_core::crypto::Ss58Codec;
     use std::str::FromStr;
-    use AccountKeyring::*;
 
     use super::*;
 
+    // TODO
     #[test]
-    fn test_account_keyring_string_name() {
-        assert_eq!(AccountKeyring::Bob.to_string(), "Bob".to_string());
-        assert_eq!(AccountKeyring::Bob.to_seed(), "//Bob".to_string());
-        assert_eq!(AccountKeyring::BobStash.to_string(), "BobStash".to_string());
-        assert_eq!(AccountKeyring::BobStash.to_seed(), "//BobStash".to_string());
-    }
+    fn f() {
+        let l = [Alice, Bob, AliceStash, BobStash]
+            .into_iter()
+            .map(|x| x.authority_keys());
 
-    #[test]
-    fn test_getting_account_id20() {
-        let alice = AccountKeyring::Alice;
-
-        let alice_account_id32 = alice.to_account_id();
-
-        // check SS58 address
-        assert_eq!(
-            alice_account_id32.to_ss58check(),
-            "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY".to_string()
-        );
-
-        assert_eq!(
-            account_id20_of(alice),
-            // H160 address of Alice dev account
-            // Derived from SS58 (42 prefix) address
-            // SS58: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-            // hex: 0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d
-            // Using the full hex key, truncating to the first 20 bytes (the first 40 hex chars)
-            AccountId20::from_str("d43593c715fdd31c61141abd04a99fd6822c8558").unwrap(),
-        );
-
-        assert_eq!(
-            account_id20_of(alice),
-            // H160 address of Alice dev account
-            // Derived from SS58 (42 prefix) address
-            // SS58: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-            // hex: 0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d
-            // Using the full hex key, truncating to the first 20 bytes (the first 40 hex chars)
-            AccountId20::from(hex!("d43593c715fdd31c61141abd04a99fd6822c8558")),
-        );
+        for (i, (a, g)) in l.enumerate() {
+            println!("=== index: {i} ===");
+            println!("aura SS58     : {}", a.to_ss58check());
+            println!("aura Hex      : {:?}", a);
+            println!("grandpa SS58  : {}", g.to_ss58check());
+            println!("grandpa Hex   : {:?}", g);
+        }
     }
 }

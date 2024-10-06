@@ -250,10 +250,10 @@ impl frame_system::Config for Runtime {
     /// This is used as an identifier of the chain. 42 is the generic substrate prefix.
     type SS58Prefix     = SS58Prefix;
     type MaxConsumers   = ConstU32<16>;
-	/// The hashing algorithm used.
-	type Hashing = Hashing;
-	/// The lookup mechanism to get account ID from whatever is passed in dispatchers.
-	type Lookup = IdentityLookup<AccountId>;
+    /// The hashing algorithm used.
+    type Hashing        = Hashing;
+    /// The lookup mechanism to get account ID from whatever is passed in dispatchers.
+    type Lookup         = IdentityLookup<AccountId>;
 }
 parameter_types! {
     pub const   Version         : RuntimeVersion    = VERSION;
@@ -294,7 +294,7 @@ impl pallet_timestamp::Config for Runtime {
     type Moment         = u64;
     // TODO: remove in case of removing manual seal
     // type OnTimestampSet = Aura; // Note: check frontier for handle manual seal
-	type OnTimestampSet = ConsensusOnTimestampSet<Self>;
+    type OnTimestampSet = ConsensusOnTimestampSet<Self>;
     type MinimumPeriod  = ConstU64<{ SLOT_DURATION / 2 }>;
     type WeightInfo     = ();
 }
@@ -495,16 +495,16 @@ mod runtime {
     pub type TransactionPayment = pallet_transaction_payment;
     #[runtime::pallet_index(6)]
     pub type Sudo               = pallet_sudo;
-	#[runtime::pallet_index(7)]
-	pub type Ethereum           = pallet_ethereum;
-	#[runtime::pallet_index(8)]
-	pub type EVM                = pallet_evm;
-	#[runtime::pallet_index(9)]
-	pub type EVMChainId         = pallet_evm_chain_id;
-	#[runtime::pallet_index(10)]
-	pub type BaseFee            = pallet_base_fee;
-	#[runtime::pallet_index(11)]
-	pub type ManualSeal         = pallet_manual_seal;
+    #[runtime::pallet_index(7)]
+    pub type Ethereum           = pallet_ethereum;
+    #[runtime::pallet_index(8)]
+    pub type EVM                = pallet_evm;
+    #[runtime::pallet_index(9)]
+    pub type EVMChainId         = pallet_evm_chain_id;
+    #[runtime::pallet_index(10)]
+    pub type BaseFee            = pallet_base_fee;
+    #[runtime::pallet_index(11)]
+    pub type ManualSeal         = pallet_manual_seal;
     #[runtime::pallet_index(12)]
     pub type Claim              = pallet_claim;
 }

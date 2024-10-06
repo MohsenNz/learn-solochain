@@ -10,7 +10,6 @@ use futures::TryFutureExt;
 use sc_cli::{ChainSpec, SubstrateCli};
 use sc_service::PartialComponents;
 use solochain_template_runtime::{Block, EXISTENTIAL_DEPOSIT};
-use sp_keyring::Sr25519Keyring;
 
 impl SubstrateCli for Cli {
     fn impl_name() -> String {
