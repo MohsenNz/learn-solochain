@@ -1,0 +1,46 @@
+[package]
+name                    = "pallet-offchain-worker" # TODO: rename
+version                 = "0.1.0"
+license                 = "Unlicense"
+authors.workspace       = true
+homepage.workspace      = true
+repository.workspace    = true
+edition.workspace       = true
+publish                 = false
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+codec           = { workspace = true }
+lite-json       = { workspace = true }
+log             = { workspace = true }
+scale-info      = { workspace = true, features = ["derive"] }
+frame-support   = { workspace = true }
+frame-system    = { workspace = true }
+sp-core         = { workspace = true }
+sp-io           = { workspace = true }
+# sp-keystore     = { workspace = true, optional = true } # TODO
+sp-runtime      = { workspace = true }
+#
+fp-account      = { workspace = true }
+
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+	"frame-support/std",
+	"frame-system/std",
+	"lite-json/std",
+	"log/std",
+	"scale-info/std",
+	"sp-core/std",
+	"sp-io/std",
+	# "sp-keystore/std", # TODO
+	"sp-runtime/std",
+]
+try-runtime = [
+	"frame-support/try-runtime",
+	"frame-system/try-runtime",
+	"sp-runtime/try-runtime",
+]

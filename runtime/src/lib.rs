@@ -14,6 +14,7 @@ use frame_support::{
     traits::{FindAuthor, OnFinalize, OnTimestampSet, VariantCountOf},
     weights::constants::{RocksDbWeight, WEIGHT_REF_TIME_PER_MILLIS},
 };
+use frame_system::offchain::{CreateSignedTransaction, SigningTypes};
 use pallet_grandpa::AuthorityId as GrandpaId;
 use pallet_transaction_payment::{ConstFeeMultiplier, FungibleAdapter, Multiplier};
 use precompiles::FrontierPrecompiles;
@@ -44,7 +45,7 @@ use pallet_evm::{
     Account as EVMAccount, EnsureAccountId20, FeeCalculator, IdentityAddressMapping, Runner,
 };
 // TODO: remove or use
-use fp_account::EthereumSignature;
+use fp_account::{AccountId20, EthereumSignature};
 
 // ----------------------------------------------------------------------------
 // Public uses
@@ -70,12 +71,14 @@ pub use sp_runtime::{Perbill, Permill};
 
 // TODO
 pub use pallet_claim;
+pub use pallet_offchain_worker;
 
 // ----------------------------------------------------------------------------
 // Type definitions
 
 /// An index to a block.
 pub type BlockNumber = u32;
+pub type ConstBlockNumber<const T: u32> = ConstU32<T>;
 /// Alias to 512-bit hash when used in the context of a transaction signature on the chain.
 /// AccountId of it would be AccountId20
 pub type Signature = EthereumSignature;
@@ -459,6 +462,13 @@ impl pallet_claim::Config for Runtime {
 }
 // Manual seal
 impl pallet_manual_seal::Config for Runtime {}
+// Pallet offchain worker
+#[rustfmt::skip]
+impl pallet_offchain_worker::Config for Runtime {
+    type RuntimeEvent       = RuntimeEvent;
+    type GracePeriod        = ConstBlockNumber<5>;
+    type MaxPrices          = ConstU32<10>;
+}
 
 // ----------------------------------------------------------------------------
 // Runtime
@@ -507,6 +517,8 @@ mod runtime {
     pub type ManualSeal         = pallet_manual_seal;
     #[runtime::pallet_index(12)]
     pub type Claim              = pallet_claim;
+    #[runtime::pallet_index(13)]
+    pub type OffchainWorker     = pallet_offchain_worker;
 }
 
 impl_runtime_apis! {
@@ -994,6 +1006,71 @@ impl_runtime_apis! {
         }
     }
 }
+
+// TODO: considration
+// impl SigningTypes for Runtime {
+//     type Signature = Signature;
+//     type Public = AccountId;
+// }
+
+impl<C> frame_system::offchain::SendTransactionTypes<C> for Runtime
+where
+    RuntimeCall: From<C>,
+{
+    type Extrinsic = UncheckedExtrinsic;
+    type OverarchingCall = RuntimeCall;
+}
+
+// TODO
+// impl<LocalCall> CreateSignedTransaction<LocalCall> for Runtime
+// where
+//     RuntimeCall: From<LocalCall>,
+// {
+//     fn create_transaction<C: frame_system::offchain::AppCrypto<Self::Public, Self::Signature>>(
+//         call: RuntimeCall,
+//         public: <Signature as Verify>::Signer,
+//         account: AccountId,
+//         nonce: Nonce,
+//     ) -> Option<(
+//         RuntimeCall,
+//         <UncheckedExtrinsic as traits::Extrinsic>::SignaturePayload,
+//     )> {
+//         let tip = 0;
+//         // take the biggest period possible.
+//         let period = BlockHashCount::get()
+//             .checked_next_power_of_two()
+//             .map(|c| c / 2)
+//             .unwrap_or(2) as u64;
+//         let current_block = System::block_number()
+//             .saturated_into::<u64>()
+//             // The `System::block_number` is initialized with `n+1`,
+//             // so the actual block number is `n`.
+//             .saturating_sub(1);
+//         let era = Era::mortal(period, current_block);
+//         let extra = (
+//             frame_system::CheckNonZeroSender::<Runtime>::new(),
+//             frame_system::CheckSpecVersion::<Runtime>::new(),
+//             frame_system::CheckTxVersion::<Runtime>::new(),
+//             frame_system::CheckGenesis::<Runtime>::new(),
+//             frame_system::CheckEra::<Runtime>::from(era),
+//             frame_system::CheckNonce::<Runtime>::from(nonce),
+//             frame_system::CheckWeight::<Runtime>::new(),
+//             pallet_transaction_payment::ChargeTransactionPayment::<Runtime>::from(tip),
+//         );
+//         let raw_payload = SignedPayload::new(call, extra)
+//             .map_err(|e| {
+//                 log::warn!("Unable to create signed payload: {:?}", e);
+//             })
+//             .ok()?;
+//         let signature = raw_payload.using_encoded(|payload| C::sign(payload, public))?;
+//         let address = account;
+//         let (call, extra, _) = raw_payload.deconstruct();
+//         Some((
+//             call,
+//             (sp_runtime::MultiAddress::Id(address), signature, extra),
+//         ))
+//     }
+// }
 
 // ----------------------------------------------------------------------------
 // Benchmark

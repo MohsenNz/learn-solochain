@@ -115,6 +115,7 @@ where
         telemetry.as_ref().map(|(_, telemetry)| telemetry.handle()),
         executor,
     )?;
+
     let client = Arc::new(client);
 
     let telemetry = telemetry.map(|(worker, telemetry)| {

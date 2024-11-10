@@ -1,4 +1,4 @@
-mod hello_precompile;
+mod custom_precompiles;
 
 use core::marker::PhantomData;
 use pallet_evm::{
@@ -10,7 +10,7 @@ use pallet_evm_precompile_modexp::Modexp;
 use pallet_evm_precompile_sha3fips::Sha3FIPS256;
 use pallet_evm_precompile_simple::{ECRecover, ECRecoverPublicKey, Identity, Ripemd160, Sha256};
 
-use self::hello_precompile::HelloPrecompile;
+use self::custom_precompiles::HelloPrecompile;
 
 // TODO: rename
 pub struct FrontierPrecompiles<R>(PhantomData<R>);

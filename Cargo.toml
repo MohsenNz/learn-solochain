@@ -9,6 +9,8 @@ edition     = "2021"
 members = [
     "node",
     "pallets/template",
+    "pallets/offchain-worker",
+    # "pallets/claim",
     "runtime",
 ]
 resolver = "2"
@@ -18,6 +20,7 @@ resolver = "2"
 solochain-template-runtime      = { path = "./runtime", default-features = false }
 pallet-template                 = { path = "./pallets/template", default-features = false }
 pallet-claim                    = { path = "./pallets/claim", default-features = false }
+pallet-offchain-worker          = { path = "./pallets/offchain-worker", default-features = false }
 # Independent
 async-trait                     = { version = "0.1" }
 clap                            = { version = "4.5.3" }
@@ -28,6 +31,7 @@ scale-info                      = { version = "2.11.3", default-features = false
 codec                           = { version = "3.6.12", default-features = false, package = "parity-scale-codec", features = ["derive"] }
 log                             = { version = "0.4.21", default-features = false }
 hex-literal                     = { version = "0.4.1" }
+lite-json                       = { version = "0.2.0", default-features = false }
 # Substrate Client
 sc-basic-authorship             = { git = "https://github.com/paritytech/polkadot-sdk", branch = "stable2407" }
 sc-cli                          = { git = "https://github.com/paritytech/polkadot-sdk", branch = "stable2407", default-features = false }
@@ -89,7 +93,8 @@ substrate-frame-rpc-system      = { git = "https://github.com/paritytech/polkado
 substrate-wasm-builder          = { git = "https://github.com/paritytech/polkadot-sdk", branch = "stable2407" }
 frame-try-runtime               = { git = "https://github.com/paritytech/polkadot-sdk", branch = "stable2407", default-features = false } 
 # Frontier Primitive
-# TODO: change master to appropriate pinned branch
+# TODO: change "master" to appropriate pinned branch
+#       "master" is not a pinned branch so updating Cargo.toml can make break
 #       currently "stable2407" not work
 fp-evm                          = { git = "https://github.com/polkadot-evm/frontier.git", branch = "master", default-features = false }
 # NOTE: branch = fp-account on "stable2407" had compilatin problem

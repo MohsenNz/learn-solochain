@@ -17,6 +17,7 @@ codec                                   = { workspace = true, features = [ "deri
 log                                     = { workspace = true }
 scale-info                              = { workspace = true, features = [ "derive", "serde" ] }
 pallet-claim                            = { workspace = true }
+pallet-offchain-worker                  = { workspace = true }
 # Substrate
 sp-api                                  = { workspace = true }
 sp-block-builder                        = { workspace = true }
