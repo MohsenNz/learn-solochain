@@ -40,7 +40,6 @@ pub fn development_config(enable_manual_seal: bool) -> ChainSpec {
                 Alice.account_id20(),
                 Bob.account_id20(),
                 AliceStash.account_id20(),
-                BobStash.account_id20(),
             ],
             // Initial PoA authorities
             vec![Alice.authority_keys()],
@@ -61,19 +60,12 @@ pub fn local_testnet_config() -> ChainSpec {
             Alice.account_id20(),
             // Pre-funded accounts
             vec![
+                // Mohsen's metamask
+                AccountId::from(hex!("7B0A6D8EC377ef7458d4fE40E86bC74884C87b00")),
                 Alice.account_id20(),
                 Bob.account_id20(),
                 AliceStash.account_id20(),
                 BobStash.account_id20(),
-                // TODO
-                // Charlie.account_id20(),
-                // Dave.account_id20(),
-                // Eve.account_id20(),
-                // Ferdie.account_id20(),
-                // CharlieStash.account_id20(),
-                // DaveStash.account_id20(),
-                // EveStash.account_id20(),
-                // FerdieStash.account_id20(),
             ],
             // Initial PoA authorities
             vec![Alice.authority_keys(), Bob.authority_keys()],
@@ -93,9 +85,21 @@ fn testnet_genesis(
 ) -> serde_json::Value {
     const UNITS: Balance = 1_000_000_000_000_000_000;
 
+    // It is for:
+    // - Creating Pre-funded Ethereum-Compatible Accounts
+    // - Deploying Predefined Smart Contracts
+    // - Setting Storage Values for Contracts
+    // When should it be used?
+    // - Test and Development Chains:
+    //   to create pre-funded test accounts or deploy test smart contracts
+    //   without requiring separate deployment steps.
+    // - Custom Mainnets:
+    //   to initialize important contracts or accounts at launch, such as token contracts,
+    //   governance contracts, or foundational accounts for network participants.
     let evm_accounts = {
         BTreeMap::from([
             (
+                // It shows how we could get H160 from SS58 address
                 // H160 address of Alice dev account
                 // Derived from SS58 (42 prefix) address
                 // SS58: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
@@ -106,9 +110,7 @@ fn testnet_genesis(
                 fp_evm::GenesisAccount {
                     balance: U256::from_str("0xffffffffffffffffffffffffffffffff")
                         .expect("internal U256 is valid; qed"),
-                    code: Default::default(),
-                    nonce: Default::default(),
-                    storage: Default::default(),
+                    ..Default::default()
                 },
             ),
             (
@@ -118,9 +120,9 @@ fn testnet_genesis(
                 fp_evm::GenesisAccount {
                     balance: U256::from_str("0xffffffffffffffffffffffffffffffff")
                         .expect("internal U256 is valid; qed"),
-                    code: Default::default(),
+                    code: Default::default(), // it could be bytes of a smart contract
+                    storage: Default::default(), // it could be contract storage (key-value pairs)
                     nonce: Default::default(),
-                    storage: Default::default(),
                 },
             ),
             (

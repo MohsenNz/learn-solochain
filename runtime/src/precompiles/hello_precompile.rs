@@ -15,11 +15,9 @@ impl LinearCostPrecompile for HelloPrecompile {
     const WORD: u64 = 1;
 
     fn execute(_: &[u8], _: u64) -> Result<(ExitSucceed, Vec<u8>), PrecompileFailure> {
-        info!("=== hello-precompile ===");
         Ok((
             ExitSucceed::Returned,
-            // "hello precompile".as_bytes().to_vec(),
-            [1, 2, 3, 4].to_vec(),
+            "hello precompile".as_bytes().to_vec(),
         ))
     }
 }

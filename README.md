@@ -31,12 +31,6 @@ nix develop
 Use the following command to build the node without launching it:
 
 ```sh
-cargo build --package solochain-template-node --release
-```
-
-Or just:
-
-```sh
 cargo build --release
 ```
 
@@ -105,28 +99,25 @@ db keystore network
 Pre-founded with native token
 
 ```yaml
-Alice       : 0x1f31d7740f9b822edd0ea965f4cfcf1034c450a2
-Bob         : 0x8347187707fea1e2418c8534998d9b8d26cd6430
-AliceStash  : 0x81593023a7f69346a047421099a8085ed0f44f7e
-BobStash    : 0xe1cb409bc4e2002e12875a1b0c528994fe3ef23e
-```
-
-Pre-founded with ETH
-
-```yaml
-account1:
-    pubkey:
-        0xAE4F6dFcdB369A6C43565b1658Ac759960a60aCb
-    privkey:
-        0x1650222a42e77da936f8c183458814cd144e7648d683b0ab7321bd2032030c08
-account2:
-    pubkey:
-        0x4dE6268744b93Ed85b4e2CF683686f4A6086293a
-    privkey:
-        0x096e09370e3b22537c854ffc517514ad7f31639b377488a252868b4276d35826
+Alice:
+    pubkey:     0x1f31d7740f9b822edd0ea965f4cfcf1034c450a2
+Bob:
+    pubkey:     0x8347187707fea1e2418c8534998d9b8d26cd6430
+AliceStash:
+    pubkey:     0x81593023a7f69346a047421099a8085ed0f44f7e
+BobStash:
+    pubkey:     0xe1cb409bc4e2002e12875a1b0c528994fe3ef23e
+unnamed1:
+    pubkey:     0xAE4F6dFcdB369A6C43565b1658Ac759960a60aCb
+    privkey:    0x1650222a42e77da936f8c183458814cd144e7648d683b0ab7321bd2032030c08
+unnamed2:
+    pubkey:     0x4dE6268744b93Ed85b4e2CF683686f4A6086293a
+    privkey:    0x096e09370e3b22537c854ffc517514ad7f31639b377488a252868b4276d35826
 ```
 
 ### POA authority accounts
+
+Dev & Test net accounts:
 
 |           |Aura Id                                         |Grandpa Id                                      |
 |-----------|------------------------------------------------|------------------------------------------------|
@@ -134,6 +125,8 @@ account2:
 |Bob        |5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty|5GoNkf6WdbxCFnPdAnYYQyCjAKPJgLNxXwPjwTh6DGg6gN3E|
 
 They are integrated with `--alice` and `--bob` switches for testing purpose.
+
+Custom spec accounts: are in the `auth_accounts_example.yml`
 
 ### Connect with Polkadot-JS Apps Front-End
 
@@ -145,12 +138,32 @@ available on [IPFS](https://dotapps.io/). You can
 also find the source code and instructions for hosting your own instance in the
 [`polkadot-js/apps`](https://github.com/polkadot-js/apps) repository.
 
-### Multi-Node Local Testnet
+### Run multi-node local testnet
 
-If you want to see the multi-node consensus algorithm in action, see [Simulate a
-network](https://docs.substrate.io/tutorials/build-a-blockchain/simulate-network/).
+- run alice node: `. ./scripts/local_testnet/run_alice_node.sh`
+- run bob node in another teminal: `. ./scripts/local_testnet/run_bob_node.sh`
 
-### Node
+Reference: [Simulate a network](https://docs.substrate.io/tutorials/build-a-blockchain/simulate-network/).
+
+### Run multi-node with custom spec
+
+- generate keys
+    - generate sr25519: `. ./scripts/utils/generate_sr25519_key.sh <a password>` 
+    - generate ed25519: `. ./scripts/utils/derive_ed25519_key.sh <previous ss58 address> <previous password>`
+    - alternatively you can use `auth_accounts_example.yml` for testing purpose
+- customize `customeSpec.json` file
+- run `. ./scripts/utils/spec_to_raw.sh` to generate `customSpecRaw.json`
+- change `./scripts/custom_chain/node.sh` according to generated keys
+- add keys to keystore by running `./scripts/custom_chain/add_keys_to_keystore.sh`
+- run node
+    - if it is first running node of the blockchain, run `./scripts/custom_chain/run_first_node.sh`
+    - otherwise run `./scripts/custom_chain/run_participant_node.sh`
+
+Reference: [Multi-node with custom spec](https://docs.substrate.io/tutorials/build-a-blockchain/add-trusted-nodes/)
+
+### Definitions
+
+#### Node
 
 A blockchain node is an application that allows users to participate in a
 blockchain network. Substrate-based blockchain nodes expose a number of
@@ -190,7 +203,7 @@ following:
   such as Aura for block authoring and GRANDPA for finality.
 
 
-### Runtime
+#### Runtime
 
 In Substrate, the terms "runtime" and "state transition function" are analogous.
 Both terms refer to the core logic of the blockchain that is responsible for
@@ -214,7 +227,7 @@ template and note the following:
   macro, which is part of the [core FRAME pallet
   library](https://docs.substrate.io/reference/frame-pallets/#system-pallets).
 
-### Pallets
+#### Pallets
 
 The runtime in this project is constructed using many FRAME pallets that ship
 with [the Substrate
