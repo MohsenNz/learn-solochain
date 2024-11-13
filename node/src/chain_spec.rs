@@ -110,7 +110,9 @@ fn testnet_genesis(
                 fp_evm::GenesisAccount {
                     balance: U256::from_str("0xffffffffffffffffffffffffffffffff")
                         .expect("internal U256 is valid; qed"),
-                    ..Default::default()
+                    code: Default::default(),
+                    storage: Default::default(),
+                    nonce: Default::default(),
                 },
             ),
             (
